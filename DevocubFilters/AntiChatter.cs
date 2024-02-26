@@ -178,13 +178,6 @@ namespace TabletDriverFilters.Devocub
                 if (!File.Exists(datasetPath))
                     File.WriteAllText(datasetPath, "x,x_hat,y,y_hat\n");
 
-                // Save tablet values
-                if (!File.Exists(tabletValuesPath))
-                    File.WriteAllText(tabletValuesPath, $"Tablet Width: {TabletValues1.X}\n"
-                                                  + $"Tablet Height: {TabletValues1.Y}\n"
-                                                  + $"Max X: {TabletValues2.X}\n"
-                                                  + $"Max Y: {TabletValues2.Y}");
-
                 return calcTarget;
             }
 
@@ -205,9 +198,10 @@ namespace TabletDriverFilters.Devocub
             weightModifier = Math.Clamp(weightModifier, 0, 1);
             this.position += delta * weightModifier;
 
-            // Get position in tablet coordinates
-            var outCalcTarget = calcTarget / MillimeterScale;
-            var outPosition = this.position / MillimeterScale;
+            // Get position in tablet coordinates normalized to [-1,1]
+            var outCalcTarget = (calcTarget / TabletWH) * 2 - Vector2.One;
+            var outPosition = (this.position / TabletWH) * 2 - Vector2.One;
+
             File.AppendAllText(datasetPath, $"{outCalcTarget.X},{outPosition.X},{outCalcTarget.Y},{outPosition.Y}\n");
 
             return this.position;
