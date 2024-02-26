@@ -180,11 +180,10 @@ namespace TabletDriverFilters.Devocub
 
                 // Save tablet values
                 if (!File.Exists(tabletValuesPath))
-                    var tabletValues = $"Tablet Width: {TabletValues1.X}\n"
-                                    + $"Tablet Height: {TabletValues1.Y}\n"
-                                    + $"Max X: {TabletValues2.X}\n"
-                                    + $"Max Y: {TabletValues2.Y}";
-                    File.WriteAllText(tabletValuesPath, tabletValues);
+                    File.WriteAllText(tabletValuesPath, $"Tablet Width: {TabletValues1.X}\n"
+                                                  + $"Tablet Height: {TabletValues1.Y}\n"
+                                                  + $"Max X: {TabletValues2.X}\n"
+                                                  + $"Max Y: {TabletValues2.Y}");
 
                 return calcTarget;
             }
