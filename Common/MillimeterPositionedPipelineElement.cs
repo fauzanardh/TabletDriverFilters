@@ -25,7 +25,7 @@ namespace TabletDriverFilters
                 X = digitizer.Width / digitizer.MaxX,
                 Y = digitizer.Height / digitizer.MaxY
             };
-            TabletMaxValues = new Vector2(digitizer.MaxX, digitizer.MaxY);
+            TabletMaxValues = new Vector2(digitizer.Width, digitizer.Height);
             HandleTabletReference(tabletReference);
         }
 
