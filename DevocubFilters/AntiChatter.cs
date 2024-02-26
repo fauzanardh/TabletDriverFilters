@@ -115,7 +115,7 @@ namespace TabletDriverFilters.Devocub
         private Vector2 position;
         private uint pressure;
         private Vector2 prevTargetPos, targetPos, calcTarget;
-        private string datasetPath = "D:/Dataset/osu_smoothing_dataset/antichatter.csv";
+        private string datasetPath = "D:/Dataset/osu_antichatter_dataset/data.csv";
 
         protected override void ConsumeState()
         {
