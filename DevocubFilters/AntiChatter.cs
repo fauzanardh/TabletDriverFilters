@@ -198,7 +198,9 @@ namespace TabletDriverFilters.Devocub
             this.position += delta * weightModifier;
 
             // Append to csv
-            File.AppendAllText(datasetPath, $"{calcTarget.X},{this.position.X},{calcTarget.Y},{this.position.Y}\n");
+            outCalcTarget = calcTarget / MillimeterScale;
+            outPosition = this.position / MillimeterScale;
+            File.AppendAllText(datasetPath, $"{outCalcTarget.X},{outPosition.X},{outCalcTarget.Y},{outPosition.Y}\n");
 
             return this.position;
         }
