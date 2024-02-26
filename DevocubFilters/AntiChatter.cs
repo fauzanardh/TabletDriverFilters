@@ -197,9 +197,12 @@ namespace TabletDriverFilters.Devocub
             weightModifier = Math.Clamp(weightModifier, 0, 1);
             this.position += delta * weightModifier;
 
-            // Append to csv
+            // Get position in tablet coordinates
             var outCalcTarget = calcTarget / MillimeterScale;
             var outPosition = this.position / MillimeterScale;
+            // Normalize values to [-1, 1]
+            outCalcTarget = (outCalcTarget / TabletMaxValues) * 2 - Vector2.One;
+            outPosition = (outPosition / TabletMaxValues) * 2 - Vector2.One;
             File.AppendAllText(datasetPath, $"{outCalcTarget.X},{outPosition.X},{outCalcTarget.Y},{outPosition.Y}\n");
 
             return this.position;

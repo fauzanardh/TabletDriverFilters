@@ -9,6 +9,7 @@ namespace TabletDriverFilters
     public abstract class MillimeterPositionedPipelineElement : IPositionedPipelineElement<IDeviceReport>
     {
         protected Vector2 MillimeterScale;
+        protected Vector2 TabletMaxValues;
 
         [TabletReference]
         public TabletReference TabletReference { set => HandleTabletReferenceInternal(value); }
@@ -24,6 +25,7 @@ namespace TabletDriverFilters
                 X = digitizer.Width / digitizer.MaxX,
                 Y = digitizer.Height / digitizer.MaxY
             };
+            TabletMaxValues = new Vector2(digitizer.MaxX, digitizer.MaxY);
             HandleTabletReference(tabletReference);
         }
 

@@ -11,6 +11,7 @@ namespace TabletDriverFilters
         public TabletReference TabletReference { set => HandleTabletReferenceInternal(value); }
 
         protected Vector2 MillimeterScale;
+        protected Vector2 TabletMaxValues;
 
         private void HandleTabletReferenceInternal(TabletReference tabletReference)
         {
@@ -20,6 +21,7 @@ namespace TabletDriverFilters
                 X = digitizer.Width / digitizer.MaxX,
                 Y = digitizer.Height / digitizer.MaxY
             };
+            TabletMaxValues = new Vector2(digitizer.MaxX, digitizer.MaxY);
             HandleTabletReference(tabletReference);
         }
 
