@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Numerics;
 using OpenTabletDriver.Plugin.Attributes;
 using OpenTabletDriver.Plugin.Output;
@@ -6,7 +7,7 @@ using OpenTabletDriver.Plugin.Tablet;
 
 namespace TabletDriverFilters.Devocub
 {
-    [PluginName("Devocub Antichatter")]
+    [PluginName("Devocub Antichatter - AI Dataset Creator")]
     public class Antichatter : MillimeterAsyncPositionedPipelineElement
     {
         private const string LATENCY_TOOLTIP =
@@ -114,6 +115,7 @@ namespace TabletDriverFilters.Devocub
         private Vector2 position;
         private uint pressure;
         private Vector2 prevTargetPos, targetPos, calcTarget;
+        private string datasetPath = "D:/Dataset/osu_smoothing_dataset/antichatter.csv";
 
         protected override void ConsumeState()
         {
@@ -170,6 +172,11 @@ namespace TabletDriverFilters.Devocub
                 this.position = calcTarget;
                 SetWeight(Latency);
                 this.isReady = true;
+
+                // Save csv header
+                if (!File.Exists(datasetPath))
+                    File.WriteAllText(datasetPath, "x,x_hat,y,y_hat\n");
+
                 return calcTarget;
             }
 
@@ -186,9 +193,12 @@ namespace TabletDriverFilters.Devocub
             else
                 weightModifier += AntichatterOffsetY;
 
-            weightModifier = weight / weightModifier;
+            weightModifier = this.weight / weightModifier;
             weightModifier = Math.Clamp(weightModifier, 0, 1);
             this.position += delta * weightModifier;
+
+            // Append to csv
+            File.AppendAllText(datasetPath, $"{calcTarget.X},{this.position.X},{calcTarget.Y},{this.position.Y}\n");
 
             return this.position;
         }
