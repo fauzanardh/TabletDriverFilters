@@ -116,7 +116,7 @@ namespace TabletDriverFilters.Devocub
         private uint pressure;
         private Vector2 prevTargetPos, targetPos, calcTarget;
         private string datasetPath = "D:/Dataset/osu_antichatter_dataset/data.csv";
-        private string tabletValues = "D:/Dataset/osu_antichatter_dataset/tablet_values.txt";
+        private string tabletValuesPath = "D:/Dataset/osu_antichatter_dataset/tablet_values.txt";
 
         protected override void ConsumeState()
         {
@@ -179,12 +179,12 @@ namespace TabletDriverFilters.Devocub
                     File.WriteAllText(datasetPath, "x,x_hat,y,y_hat\n");
 
                 // Save tablet values
-                if (!File.Exists(tabletValues))
+                if (!File.Exists(tabletValuesPath))
                     var tabletValues = $"Tablet Width: {TabletValues1.X}\n"
                                     + $"Tablet Height: {TabletValues1.Y}\n"
                                     + $"Max X: {TabletValues2.X}\n"
                                     + $"Max Y: {TabletValues2.Y}";
-                    File.WriteAllText(tabletValues, tabletValues);
+                    File.WriteAllText(tabletValuesPath, tabletValues);
 
                 return calcTarget;
             }
